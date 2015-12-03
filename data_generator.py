@@ -1,6 +1,7 @@
 # generates synthetic data for the light bulb test
 import numpy as np
 from utility import *
+from algorithms import *
 import time
 
 
@@ -43,5 +44,6 @@ if __name__ == "__main__":
 	print a
 	print generate_epsilon_close_pair(a, 2)
 	print a.shape, a.ndim, a.dtype.name
+	print brute_force(a, 1)
 
 

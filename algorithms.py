@@ -1,11 +1,21 @@
-# contains implementation of all algorithms
+# the suite of algorithms
 
 import numpy as np
-import time
+from utility import *
 
-def brute_force(m):
-	""" takes a matrix and calculates pairwise dot products of all columns
-		returns closest pairs indices and the value of dot products
-		TODO: enhance to return top k closest pairs
+def brute_force(m, k=1):
+	""" takes a matrix and calculates pairwise dot product of all columns
+		returns k closest pairs indices and the value of dot products
 	"""
-	pass
+	resultant_matrix = np.dot(m.T, m)
+	if k == 1:
+		return get_largest_element(resultant_matrix)
+	else:
+		return get_top_k(resultant_matrix, k)
+
+
+# TODO: Valiant
+
+# TODO: LSH
+	
+# TODO: optimization multithreaded implementation and caches
