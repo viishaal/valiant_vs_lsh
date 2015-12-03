@@ -5,6 +5,7 @@
 import numpy as np
 import time
 import heapq as hq
+import matplotlib.pyplot as plt
 
 
 def randomly_seed_numpy():
@@ -14,7 +15,7 @@ def randomly_seed_numpy():
 
 
 def random_integer(h):
-	""" returns random integer between [0,h) (not h is exclusive)
+	""" returns random integer between [0,h) (note that h is exclusive)
 		using numpy function
 	"""
 	return np.random.randint(0, h, size=1)[0]
@@ -67,6 +68,30 @@ def get_largest_element(m):
 					largest = elem
 					largest_tup = tup
 	return [(largest, largest_tup)]
+
+def flatten_matrix(m):
+	""" given a nXn matrix m flattens it and removes diagonal elements from the flat
+	"""
+	arr = m.flat
+	dim = m.shape[0]
+	index = [i*dim+i for i in range(0,dim)]
+	np.delete(arr, index)
+	return arr
+
+
+######################### matrix/array analysis
+
+def matrix_to_histogram(m, bins=50, normed=1):
+	""" plots a histogram to get general idea of distribution of off-diagonal elements
+	"""
+	arr = flatten_matrix(m)
+	plt.hist(m, bins=bins, normed=normed)
+	plt.show()
+
+
+
+
+
 
 
 

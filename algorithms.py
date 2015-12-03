@@ -1,5 +1,7 @@
 # the suite of algorithms
 
+# TODO: insert timers
+
 import numpy as np
 from utility import *
 

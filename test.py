@@ -11,3 +11,4 @@ if __name__ == "__main__":
 	print generate_epsilon_close_pair(a, 2)
 	print a.shape, a.ndim, a.dtype.name
 	print brute_force(a, 1)
+	matrix_to_histogram(np.dot(a.T, a), 10)
