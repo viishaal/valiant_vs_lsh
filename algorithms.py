@@ -124,10 +124,37 @@ class LSHtester:
 		metric: distance metric for NN
 		hash_family: LSH hash family
 		k_set: different k to try
-		L_val: different L to try
+		L_set: different L to try
 
 		"""
-		pass
+		close_points_ans = []
+		for q in queries:
+			res = []
+			for i_x,dist in self.brute_force_search(q, metric,
+					self.neighbor_num+1):
+				res.append(i_x)
+			close_points_ans.append(res)
+
+		print("L\tk\tacc\ttouch")
+
+		for k in k_set:
+			lsh = LSHmain(hash_family, k, 0)
+			for L in L_set:
+				lsh.resize(L)
+				lsh.index(self.points)
+
+				right_points = 0
+				
+				for q,ans in zip(self.queries, close_points_ans):
+					lsh_ans = []
+					for i_x,dist in lsh.query(q, metric,
+							self.neighbor_num+1):
+						lsh_ans.append(i_x)
+					if lsh_ans == ans:
+						right_points += 1
+				print "{0}\t{1}\t{2}\t{3}".format(L, k,
+						float(right_points)/100,
+						float(lsh.get_average_touched())/len(self.points))
 	
 	def brute_force_search(self, q, metric, res_limit):
 		""" brute force search for close points """
