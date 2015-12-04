@@ -5,6 +5,7 @@
 import numpy as np
 import time
 import heapq as hq
+import math
 import matplotlib.pyplot as plt
 
 
@@ -78,6 +79,55 @@ def flatten_matrix(m):
 	np.delete(arr, index)
 	return arr
 
+def generate_random_vector(n):
+	""" given size of the vector returns a random numpy array of +1,-1
+	"""
+	v = np.random.randint(2, size = n)
+	v[v==0] = -1
+	return v
+
+def randomly_partition_into_subsets(n, b):
+	""" given n points/indexes randomly assigns them to b buckets
+		returns mapping as a dictionary
+
+		Note: points are indexed from 0 to n-1 and buckets from 0 to b-1
+
+		TODO: check if each bucket should have exactly n/b elements or close enough will do
+			  an approximation should yeild better run time
+	"""
+	mapping = {}
+	available_buckets = range(0, b)  # all buckets are available initially
+	remaining_points = False
+
+	# uniformly distribute points to buckets now
+	for i in range(0,n):
+		no_available_buckets = len(available_buckets)
+		if no_available_buckets == 0:   #all buckets filled exit
+			remaining_points = True
+			break
+
+		r = random_integer(no_available_buckets)  # randomly generate a bucket index
+		bucket_no = available_buckets[r]
+		# add element to this bucket
+		if bucket_no in mapping:
+			mapping[bucket_no].append(i)
+		else:
+			mapping[bucket_no] = [i]
+
+		# remove bucket from available list if it is filled
+		if len(mapping[bucket_no]) == math.floor(n/b):
+			available_buckets.remove(bucket_no)
+
+	if remaining_points:   # still need to allocate points
+		# generate random permutation
+		pm = np.random.permutation(range(0,b))
+		start = i
+		for i in range(i, n):
+			mapping[pm[i - start]].append(i)
+
+	return mapping
+
+
 
 ######################### matrix/array analysis
 
@@ -87,14 +137,6 @@ def matrix_to_histogram(m, bins=50, normed=1):
 	arr = flatten_matrix(m)
 	plt.hist(m, bins=bins, normed=normed)
 	plt.show()
-
-
-
-
-
-
-
-
 
 
 
