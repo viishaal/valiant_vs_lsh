@@ -5,6 +5,8 @@
 import numpy as np
 from utility import *
 import math
+from collections import defaultdict
+from operater import itemgetter
 
 ########################################### Brutus
 
@@ -56,7 +58,6 @@ def expand_and_aggregate():
 class LSHmain:
 	
 	def __init__(self, hash_family, k, L):
-		super(LSH, self).__init__()
 		self.hash_family = hash_family
 		self.k = k
 		self.L = 0
@@ -112,6 +113,28 @@ class LSHmain:
 	def get_average_touched(self):
 		return self.total_touched/self.query_num
 
+class LSHtester:
+	def __init__(self, points, queries, neighbor_num):
+		self.points = points
+		self.queries = queries
+		self.neighbor_num = neighbor_num
+	
+	def run(self, metric, hash_family, k_set, L_set):
+		"""
+		metric: distance metric for NN
+		hash_family: LSH hash family
+		k_set: different k to try
+		L_val: different L to try
+
+		"""
+		pass
+	
+	def brute_force_search(self, q, metric, res_limit):
+		""" brute force search for close points """
+		close_points = []
+		for i_x,p in enumerate(self.points):
+			close_points.append((i_x, metric(p, q)))
+		return sorted(close_points, key=itemgetter(1))[:res_limit]
 
 
 
