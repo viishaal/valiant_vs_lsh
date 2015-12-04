@@ -55,62 +55,62 @@ def expand_and_aggregate():
 # TODO: LSH
 class LSHmain:
 	
-	def __init__(self, hashFamily, k, L):
+	def __init__(self, hash_family, k, L):
 		super(LSH, self).__init__()
-		self.hashFamily = hashFamily
+		self.hash_family = hash_family
 		self.k = k
 		self.L = 0
-		self.hashTables = []
-		self.fillHashTables(L)
+		self.hash_tables = []
+		self.fill_hash_tables(L)
 	
-	def fillHashTables(self, L):
+	def fill_hash_tables(self, L):
 		""" Fill or truncate hash tables """
 		if L < self.L:
-			self.hashTables = self.hashTables[:L]
+			self.hash_tables = self.hash_tables[:L]
 		else:
-			hashFunctions = []
+			hash_functions = []
 			for l in xrange(self.L, L):
 				# hash table l
 				func = []
 				for j in xrange(self.k):
 					# h_j
-					func.append(self.hashFamily.createHashFunction())
-				hashFunctions.append(func)
-			for h in hashFunctions:
-				self.hashTables.append((h, defaultdict(lambda:[])))
+					func.append(self.hash_family.create_hash_function())
+				hash_functions.append(func)
+			for h in hash_functions:
+				self.hash_tables.append((h, defaultdict(lambda:[])))
 	
 	def hash(self, h, p):
 		res = []
 		for func in h:
 			res.append(func.hash(p))
-		return self.hashFamily.combine(res)
+		return self.hash_family.combine(res)
 	
 	def index(self, dataset):
 		""" index points in dataset """
 		self.dataset = dataset
-		for h,table in self.hashTables:
+		for h,table in self.hash_tables:
 			for i_x,p in enumerate(self.dataset):
 				table[self.hash(h, p)].append(i_x)
-		self.totalTouched = 0
-		self.queryNum = 0
+		self.total_touched = 0
+		self.query_num = 0
 	
-	def query(self, q, metric, resLimit):
+	def query(self, q, metric, res_limit):
 		""" according to the metric, find resLimit closest points to q """
-		uniqueClosePoints = set()
-		for h,table in self.hashTables:
-			closePoints = table.get(self.hash(h, q), [])
-			uniqueClosePoints.update(closePoints)
-		self.totalTouched += len(uniqueClosePoints)
-		self.queryNum += 1
+		unique_close_points = set()
+		for h,table in self.hash_tables:
+			close_points = table.get(self.hash(h, q), [])
+			unique_close_points.update(close_points)
+		self.total_touched += len(unique_close_points)
+		self.query_num += 1
 		tmp = []
-		for i_x in uniqueClosePoints:
+		for i_x in unique_close_points:
 			tmp.append((i_x, metric(q, self.points[i_x])))
-		uniqueClosePoints = tmp
-		uniqueClosePoints.sort(key=itemgetter(1))
-		return uniqueClosePoints[:resLimit]
+		unique_close_points = tmp
+		unique_close_points.sort(key=itemgetter(1))
+		return unique_close_points[:res_limit]
 
-	def getAverageTouched(self):
-		return self.totalTouched/self.queryNum
+	def get_average_touched(self):
+		return self.total_touched/self.query_num
 
 
 
