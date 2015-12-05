@@ -4,42 +4,62 @@
 
 import numpy as np
 from utility import *
+import heapq as hq
 import math
 import random
 from collections import defaultdict
 from operater import itemgetter
 
 ########################################### Brutus
-
+# TODO IMPORTANT: replace with Strassens multiplication
 def brute_force(m, k=1):
 	""" takes a matrix and calculates pairwise dot product of all columns
-		returns k closest pairs indices and the value of dot products
+		returns k closest off-diagonal pairs indices and the value of dot products
+		Ex return: [(v1, (i1,j1)), (v2, (i2,j2))] v1,v2 are values while (i1,j1), (i2,j2) are indices
 	"""
 	resultant_matrix = np.dot(m.T, m)
 	if k == 1:
-		return get_largest_element(resultant_matrix)
+		return get_largest_element(resultant_matrix, True)
 	else:
-		return get_top_k(resultant_matrix, k)
+		return get_top_k(resultant_matrix, k, True)
 
+# TODO IMPORTANT: replace with Strassens multiplication
+def brute_force_disjoint(m1, m2, k=1):
+	""" takes two matrices and calculates pairwise dot product of all columns
+		returns k closest pairs indices and the value of dot products
+		Ex return: [(v1, (i1,j1)), (v2, (i2,j2))] v1,v2 are values while (i1,j1), (i2,j2) are indices
+	"""
+	# TODO: replace with Strassens multiplication
+	resultant_matrix = np.dot(m1.T, m2)
+	if k == 1:
+		return get_largest_element(resultant_matrix, False)
+	else:
+		return get_top_k(resultant_matrix, k, False)
 
 ########################################### Valiant
 
-def vector_aggregation(m, alpha, k):
+def vector_aggregation(m, alpha, k=1):
+	n = m.shape[1]    # number of points
+	d = m.shape[0]	  # dimensions
+
 	# check input
-	if k > pow(n, 2(1-alpha)):
+	if k > pow(n, 2*(1-alpha)):
 		print "Invalid value of k"
 		return None
 
-	n = m.shape[1]    # number of points
-	d = m.shape[0]	  # dimensions
 	iterations = 10 * int(math.log(n, 2))     # 10logn
-	no_of_subsets = math.floor(pow(n, (1-alpha)))
+	no_of_subsets = int(math.floor(pow(n, (1-alpha))))
+
+	# heap to store highest k elements
+	h = []
+
+	iterations = 1
 	for i in range(0, iterations):
 		# randomly partition points into subsets
 		mapping = randomly_partition_into_subsets(n, no_of_subsets)
 
 		W = []    # list of W matrix
-		for j in range(0, iterations):
+		for j in range(0, 5):
 			# generate q to flip vectors randomly
 			q = generate_random_vector(n)
 
@@ -48,7 +68,45 @@ def vector_aggregation(m, alpha, k):
 			for key in mapping:
 				indices = mapping[key]
 				Z[:, key] = np.sum((m[:, indices] * q[indices]), axis = 1)
-				W.append(np.dot(Z.T, Z))
+
+			# TODO: replace with Strassens
+			W.append(np.dot(Z.T, Z))
+
+		# create the W matrix from the W list of matrices (75% percentile)
+		W_percentile = np.empty(shape = (no_of_subsets, no_of_subsets))
+		for x in range(0, no_of_subsets):
+			for y in range(0, no_of_subsets):
+				l = [W[ctr][x, y] for ctr in range(0, len(W))]
+				W_percentile[x, y] = np.percentile(np.array(l), 75, interpolation='lower')
+
+		# search for top k elements in W_percentile matrix
+		if k == 1:
+			top_k = get_largest_element(W_percentile, True)
+		else:
+			top_k = get_top_k(W_percentile, k, True)
+
+		for elem in top_k:
+			# get the corresponding buckets
+			(b1, b2) = elem[1]
+			# brute force search vectors in b1 and b2
+			m1 = m[:, mapping[b1]]
+			m2 = m[:, mapping[b2]]
+
+			top_k_in_iteration = brute_force_disjoint(m1, m2, k)
+
+			# store in heap
+			for p in top_k_in_iteration:
+				# reverse map p to original indexes in m
+				val = p[0]
+				idx1 = mapping[b1][p[1][0]]
+				idx2 = mapping[b2][p[1][1]]
+				if len(h) < k:
+					hq.heappush(h, (val, (idx1, idx2)))
+				elif h[0][0] < p[0]:
+					hq.heappushpop(h, (val, (idx1, idx2)))
+
+	return [hq.heappop(h) for i in range(0, len(h))]
+
 
 
 def expand_and_aggregate():

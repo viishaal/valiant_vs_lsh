@@ -32,7 +32,7 @@ def generate_epsilon_close_pair(m, epsilon):
 	v2[np.random.random(d) <= thresh] *= -1
 
 	# append v2 to the matrix
-	m= np.hstack((m, v2.reshape(d, 1)))
+	m = np.hstack((m, v2.reshape(d, 1)))
 	shuffle_columns(m)
-	return v2
+	return m, v2
 

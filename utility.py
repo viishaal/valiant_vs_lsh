@@ -26,8 +26,10 @@ def shuffle_columns(m):
 	"""
 	np.random.shuffle(m.T)
 
-def get_top_k(m, k=1):
+def get_top_k(m, k=1, diagonal_ignore = True):
 	""" given a matrix iterates on its elements and maintains top k in a min heap
+		diagonal_ignore => flag to indicate whether to ignore diagnoal elements or not
+						   and search half the matrix assuming it is symmetric
 
 		return top k values with indices of element in matrix
 		TODO: think about sketching to get top k heavy hitters in this sparse matrix
@@ -39,7 +41,9 @@ def get_top_k(m, k=1):
 	for i in range(0, rows):
 		for j in range(0, cols):
 			#ignore diagonal elements
-			if i != j:
+			if diagonal_ignore and i <= j:
+				continue;
+			else:
 				elem = m[i,j]
 				tup = (i, j)    # to track indexes of highest elements
 				if len(h) < k:
@@ -51,8 +55,11 @@ def get_top_k(m, k=1):
 	return [hq.heappop(h) for i in range(0, len(h))]
 
 
-def get_largest_element(m):
+def get_largest_element(m, diagonal_ignore = True):
 	""" returns largest element with its index in matrix
+		diagonal_ignore => flag to indicate whether to ignore diagnoal elements or not
+						   and search half the matrix assuming it is symmetric
+
 	"""
 	rows = m.shape[0]
 	cols = m.shape[1]
@@ -61,8 +68,9 @@ def get_largest_element(m):
 	largest_tup = None
 	for i in range(0, rows):
 		for j in range(0, cols):
-			#ignore diagonal elements
-			if i != j:
+			if diagonal_ignore and i <= j:
+				continue;
+			else:
 				elem = m[i,j]
 				tup = (i, j)    # to track indexes of highest elements
 				if largest < elem:
