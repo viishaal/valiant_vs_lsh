@@ -5,6 +5,7 @@
 import numpy as np
 from utility import *
 import math
+import random
 from collections import defaultdict
 from operater import itemgetter
 
@@ -153,7 +154,7 @@ class LSHtester:
 					if lsh_ans == ans:
 						right_points += 1
 				print "{0}\t{1}\t{2}\t{3}".format(L, k,
-						float(right_points)/100,
+						float(right_points)/len(queries),
 						float(lsh.get_average_touched())/len(self.points))
 	
 	def brute_force_search(self, q, metric, res_limit):
@@ -162,6 +163,42 @@ class LSHtester:
 		for i_x,p in enumerate(self.points):
 			close_points.append((i_x, metric(p, q)))
 		return sorted(close_points, key=itemgetter(1))[:res_limit]
+
+class L1HashFamily:
+	def __init__(self, w, d):
+		self.w = w
+		self.d = d
+	
+	def create_hash_function(self):
+		pass
+
+	def random_partition(self):
+		partition_set = []
+		for i in xrange(self.d):
+			partition_set.append(random.uniform(0, self.w))
+		return partition_set
+	
+	def combine(self, hash_res_set):
+		return str(hash_res_set)
+
+class L1Hash:
+	def __init__(self, S, w):
+		self.S = S
+		self.w = w
+	
+	def hash(self, vector):
+		hash_res = []
+		for i,s in enumerate(self.S):
+			hash_res.append(int((vector[i]-s)/self.w))
+		return str(hash_res)
+
+def L1_norm(u, v):
+	dist = []
+	for i in xrange(len(u)):
+		dist.append(abs(u[i]-v[i]))
+	return sum(dist)
+
+
 
 
 
