@@ -15,8 +15,8 @@ if __name__ == "__main__":
 	print brute_force(m, 1)
 	#matrix_to_histogram(np.dot(a.T, a), 10)
 
-	#print "vector aggregation"
-	#print vector_aggregation(m, 0.33)
+	print "vector aggregation"
+	print vector_aggregation(m, 0.33)
 
 	print "Indyk LSH"
 	print "=========================="
