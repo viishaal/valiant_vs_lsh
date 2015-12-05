@@ -15,22 +15,23 @@ if __name__ == "__main__":
 	print brute_force(m, 1)
 	#matrix_to_histogram(np.dot(a.T, a), 10)
 
-	print "vector aggregation"
-	print vector_aggregation(m, 0.33)
+	#print "vector aggregation"
+	#print vector_aggregation(m, 0.33)
 
 	print "Indyk LSH"
 	print "=========================="
-	d = 3
-	vec_num = 10
-	a_ = generate_random_matrix(d,vec_num)
-	points, v_ = generate_epsilon_close_pair(a_, 2)
+	d = 5
+	vec_num = 1000
+	a_lsh = generate_random_matrix(d,vec_num)
+	points, v_lsh = generate_epsilon_close_pair(a_lsh, 2)
 	points = points.T
 	print "points:"
 	print points
-	
 	print "d = %d" % d
-	print "# of vectors = %d" % vec_num
-	lsh_tester = LSHtester(points, points[:vec_num/2], 1)
-	lsh_tester.run(L1_norm, L1HashFamily(2,d),[2,4,8],[2,4,8,16])
+	print "#vectors = %d" % vec_num
+	lsh_tester = LSHtester(points, points[:vec_num/10], 1)
+	k_set = [2,4,8]
+	L_set = [2,4,8,16]
+	lsh_tester.run(L1_norm, L1HashFamily(2, d), k_set, L_set)
 
 

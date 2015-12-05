@@ -9,6 +9,7 @@ import math
 import random
 from collections import defaultdict
 from operator import itemgetter
+import time
 
 ########################################### Brutus
 # TODO IMPORTANT: replace with Strassens multiplication
@@ -138,10 +139,9 @@ def expand_and_aggregate(X, rho, tau, w, k=1):
 
 	
 
-###########################################Indyk LSH
-# TODO: LSH
+########################################### Indyk LSH
+
 class LSHmain:
-	
 	def __init__(self, hash_family, k, L):
 		self.hash_family = hash_family
 		self.k = k
@@ -220,13 +220,15 @@ class LSHtester:
 				res.append(i_x)
 			close_points_ans.append(res)
 
-		print("L\tk\tacc\ttouch")
+		print("L\tk\t\tacc\t\t\ttouch\t\ttime")
 
 		for k in k_set:
+			start_timer = time.time()
 			lsh = LSHmain(hash_family, k, 0)
 			for L in L_set:
 				lsh.fill_hash_tables(L)
 				lsh.index(self.points)
+				end_timer = time.time()
 
 				right_points = 0
 				
@@ -237,9 +239,10 @@ class LSHtester:
 						lsh_ans.append(i_x)
 					if lsh_ans == ans:
 						right_points += 1
-				print "{0}\t{1}\t{2}\t{3}".format(L, k,
-						float(right_points)/len(self.queries),
-						float(lsh.get_average_touched())/len(self.points))
+				print "{0}\t{1}\t\t{2}%\t\t\t{3:.2f}%\t\t{4:.4f} s".format(L, k,
+						right_points*100/len(self.queries),
+						float(lsh.get_average_touched())*100/len(self.points),
+						end_timer-start_timer)
 	
 	def brute_force_search(self, q, metric, res_limit):
 		""" brute force search for close points """
@@ -282,10 +285,6 @@ def L1_norm(u, v):
 	for i in xrange(len(u)):
 		dist.append(abs(u[i]-v[i]))
 	return sum(dist)
-
-
-
-
 
 # TODO: optimization multithreaded implementation and caches
 
