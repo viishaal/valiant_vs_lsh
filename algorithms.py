@@ -8,7 +8,7 @@ import heapq as hq
 import math
 import random
 from collections import defaultdict
-#from operater import itemgetter
+from operator import itemgetter
 
 ########################################### Brutus
 # TODO IMPORTANT: replace with Strassens multiplication
@@ -171,11 +171,11 @@ class LSHmain:
 			res.append(func.hash(p))
 		return self.hash_family.combine(res)
 	
-	def index(self, dataset):
+	def index(self, points):
 		""" index points in dataset """
-		self.dataset = dataset
+		self.points = points
 		for h,table in self.hash_tables:
-			for i_x,p in enumerate(self.dataset):
+			for i_x,p in enumerate(self.points):
 				table[self.hash(h, p)].append(i_x)
 		self.total_touched = 0
 		self.query_num = 0
@@ -213,7 +213,7 @@ class LSHtester:
 
 		"""
 		close_points_ans = []
-		for q in queries:
+		for q in self.queries:
 			res = []
 			for i_x,dist in self.brute_force_search(q, metric,
 					self.neighbor_num+1):
@@ -225,7 +225,7 @@ class LSHtester:
 		for k in k_set:
 			lsh = LSHmain(hash_family, k, 0)
 			for L in L_set:
-				lsh.resize(L)
+				lsh.fill_hash_tables(L)
 				lsh.index(self.points)
 
 				right_points = 0
@@ -238,7 +238,7 @@ class LSHtester:
 					if lsh_ans == ans:
 						right_points += 1
 				print "{0}\t{1}\t{2}\t{3}".format(L, k,
-						float(right_points)/len(queries),
+						float(right_points)/len(self.queries),
 						float(lsh.get_average_touched())/len(self.points))
 	
 	def brute_force_search(self, q, metric, res_limit):
@@ -254,7 +254,8 @@ class L1HashFamily:
 		self.d = d
 	
 	def create_hash_function(self):
-		pass
+		partition = self.random_partition()
+		return L1Hash(partition, self.w)
 
 	def random_partition(self):
 		partition_set = []
