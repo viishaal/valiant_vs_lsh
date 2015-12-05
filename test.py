@@ -20,10 +20,11 @@ if __name__ == "__main__":
 
 	print "Indyk LSH"
 	print "=========================="
-	d = 5
-	vec_num = 1000
+	d = 3
+	vec_num = 10
 	a_ = generate_random_matrix(d,vec_num)
 	points, v_ = generate_epsilon_close_pair(a_, 2)
+	points = points.T
 	print "points:"
 	print points
 	
