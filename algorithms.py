@@ -8,7 +8,7 @@ import heapq as hq
 import math
 import random
 from collections import defaultdict
-from operater import itemgetter
+#from operater import itemgetter
 
 ########################################### Brutus
 # TODO IMPORTANT: replace with Strassens multiplication
@@ -59,7 +59,7 @@ def vector_aggregation(m, alpha, k=1):
 		mapping = randomly_partition_into_subsets(n, no_of_subsets)
 
 		W = []    # list of W matrix
-		for j in range(0, 5):
+		for j in range(0, iterations):
 			# generate q to flip vectors randomly
 			q = generate_random_vector(n)
 
@@ -109,8 +109,34 @@ def vector_aggregation(m, alpha, k=1):
 
 
 
-def expand_and_aggregate():
-	pass
+def expand_and_aggregate(X, rho, tau, w, k=1):
+	""" given an m x n matrix X, performs tensor embedding on X
+
+	"""
+	alpha = 1/(2 * (4 - w))
+	m = X.shape[0]
+	n = X.shape[1]
+
+	# final dimension
+	_m = math.floor(pow(n, 2 * alpha + math.log(rho, 2)/math.log(tau, 2)) * pow(math.log(n, 2), 4) )
+	q = math.ceil(math.log(n, 2) / (-2 * math.log(tau, 2)))
+	if q > m:
+		q = m
+
+	Y = np.empty(shape = (_m, n))
+	if _m >= n:
+		# TODO: brute force???
+		pass
+	else:
+		for i in range(0, _m):
+			# choose q rows uniformly at random from m
+			t = np.random.randint(0, m, size=q)
+			Y[i, :] = np.sum(X[t, :], axis = 0)
+
+	#TODO: integrate with aggregation after figuring out some stuff and bit of refactoring
+	return Y
+
+	
 
 ###########################################Indyk LSH
 # TODO: LSH
