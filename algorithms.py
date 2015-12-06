@@ -215,7 +215,7 @@ class LSHtester:
 		close_points_ans = []
 		for q in self.queries:
 			res = []
-			for i_x,dist in self.brute_force_search(q, metric,
+			for i_x,dist in self.lsh_brute_force_search(q, metric,
 					self.neighbor_num+1):
 				res.append(i_x)
 			close_points_ans.append(res)
@@ -244,7 +244,7 @@ class LSHtester:
 						float(lsh.get_average_touched())*100/len(self.points),
 						end_timer-start_timer)
 	
-	def brute_force_search(self, q, metric, res_limit):
+	def lsh_brute_force_search(self, q, metric, res_limit):
 		""" brute force search for close points """
 		close_points = []
 		for i_x,p in enumerate(self.points):
