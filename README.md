@@ -1,4 +1,5 @@
 Make sure you have numpy, matplotlib installed
+For image processing, please make sure you have PIL 1.1.7, requests installed
 
 run test.py
 
