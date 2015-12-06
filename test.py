@@ -18,7 +18,7 @@ if __name__ == "__main__":
 	#print "vector aggregation"
 	#print vector_aggregation(m, 0.33)
 
-	print "Indyk LSH"
+	print "\nIndyk LSH"
 	print "=========================="
 	d = 5
 	vec_num = 1000
@@ -28,10 +28,18 @@ if __name__ == "__main__":
 	print "points:"
 	print points
 	print "d = %d" % d
-	print "#vectors = %d" % vec_num
-	lsh_tester = LSHtester(points, points[:vec_num/10], 1)
+	print "#vectors = %d\n" % vec_num
+
+	#params
 	k_set = [2,4,8]
 	L_set = [2,4,8,16]
-	lsh_tester.run(L1_norm, L1HashFamily(2, d), k_set, L_set)
+	query_size = vec_num/10
+	# how many close points to find
+	neighbor_num = 1
+	#radius of hash family, larger w more points will be touched
+	LSH_family_w = 2
+
+	lsh_tester = LSHtester(points, points[:query_size], neighbor_num)
+	lsh_tester.run(L1_norm, L1HashFamily(LSH_family_w, d), k_set, L_set)
 
 
