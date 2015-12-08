@@ -1,5 +1,8 @@
 Make sure you have numpy, matplotlib installed
-For image processing, please make sure you have PIL 1.1.7, requests installed
+
+For image processing, please make sure you have PIL, requests installed, and
+also download the imageNet url txt file, which is too large for pushing up to
+git.
 
 run test.py
 
