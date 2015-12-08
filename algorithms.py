@@ -213,6 +213,7 @@ class LSHtester:
 
 		"""
 		close_points_ans = []
+		lsh_ans_set = []
 		for q in self.queries:
 			res = []
 			for i_x,dist in self.lsh_brute_force_search(q, metric,
@@ -237,12 +238,14 @@ class LSHtester:
 					for i_x,dist in lsh.query(q, metric,
 							self.neighbor_num+1):
 						lsh_ans.append(i_x)
+					lsh_ans_set.append(lsh_ans)
 					if lsh_ans == ans:
 						right_points += 1
 				print "{0}\t{1}\t\t{2}%\t\t\t{3:.2f}%\t\t{4:.4f} s".format(L, k,
 						right_points*100/len(self.queries),
 						float(lsh.get_average_touched())*100/len(self.points),
 						end_timer-start_timer)
+		return close_points_ans, lsh_ans_set
 	
 	def lsh_brute_force_search(self, q, metric, res_limit):
 		""" brute force search for close points """

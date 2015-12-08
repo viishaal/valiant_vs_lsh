@@ -20,8 +20,8 @@ if __name__ == "__main__":
 
 	print "\nIndyk LSH"
 	print "=========================="
-	d = 5
-	vec_num = 1000
+	d = 500
+	vec_num = 100
 	a_lsh = generate_random_matrix(d,vec_num)
 	points, v_lsh = generate_epsilon_close_pair(a_lsh, 2)
 	points = points.T
@@ -31,15 +31,15 @@ if __name__ == "__main__":
 	print "#vectors = %d\n" % vec_num
 
 	#params
-	k_set = [2,4,8]
-	L_set = [2,4,8,16]
+	k_set = [2,4]
+	L_set = [2,4,8]
 	query_size = vec_num/10
 	# how many close points to find
 	neighbor_num = 1
 	#radius of hash family, larger w more points will be touched
-	LSH_family_w = 2
+	LSH_family_w = 280
 
 	lsh_tester = LSHtester(points, points[:query_size], neighbor_num)
-	lsh_tester.run(L1_norm, L1HashFamily(LSH_family_w, d), k_set, L_set)
+	ans, lsh_ans = lsh_tester.run(L1_norm, L1HashFamily(LSH_family_w, d), k_set, L_set)
 
 
