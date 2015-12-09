@@ -1,15 +1,12 @@
 import requests
+from requests.exceptions import ConnectionError
 import requests_cache
 from PIL import Image
 import numpy as np
 from StringIO import StringIO
+from imageNet import *
 
 requests_cache.install_cache()
-
-def get_image_from_url(url):
-	""" Fetch image file from url """
-	response = requests.get(url)
-	return Image.open(StringIO(response.content))
 
 def get_image_array(image):
 	""" convert image file to matrix """
@@ -71,7 +68,7 @@ def convert_img_to_vector(image, size_tuple, threshold):
 	binary_arr = make_binary_array(binary_img)
 	return flatten_array_to_vector(binary_arr)
 
-def read_imageNet(index_range, pic_res):
+def read_imageNet(wnids, pic_res):
 	"""
 	fetch URLs in the given index range in the data file,
 	and matrix composed of all vectors representing the images
@@ -84,23 +81,26 @@ def read_imageNet(index_range, pic_res):
 	urls: URL list of all the interested images
 	matrix: nxd, each image vector is d-dimensional, and n is #images
 	"""
-	file = open("imageNet.txt")
-	start,end = index_range
-	urls = []
+
+	imagenet = ImageNet(wnids)
+	valid_urls = []
 	matrix = []
-	idx = 0
-	while idx <= end:
-		line = file.readline()
-		url = fetch_url(line)
-		if is_flickr(url):
-			if idx >= start:
-				urls.append(url)
-				image = get_image_from_url(url)
-				vec = convert_img_to_vector(image, pic_res, 100)
-				matrix.append(vec)
-			idx += 1
+	urls = imagenet.url_list
+	count = 0
+	print "fetching %d images from ImageNet..." % len(urls)
+	for url in urls:
+		try:
+			response = requests.get(url)
+		except ConnectionError as e:
+			response = None
+		if response != None and response.headers['Content-Type']=='image/jpeg' and response.status_code == 200:
+			count += 1
+			valid_urls.append(url)
+			image = Image.open(StringIO(response.content))
+			vec = convert_img_to_vector(image, pic_res, 100)
+			matrix.append(vec)
+	print "finished! %d valid images found" % count
 	matrix = np.array(matrix)
-	file.close()
-	return urls,matrix
+	return valid_urls,matrix
 
 
