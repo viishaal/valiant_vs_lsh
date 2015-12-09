@@ -54,7 +54,6 @@ def vector_aggregation(m, alpha, k=1):
 	# heap to store highest k elements
 	h = []
 
-	iterations = 1
 	for i in range(0, iterations):
 		# randomly partition points into subsets
 		mapping = randomly_partition_into_subsets(n, no_of_subsets)
