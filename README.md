@@ -1,8 +1,7 @@
 Make sure you have numpy, matplotlib installed
 
-For image processing, please make sure you have PIL, requests installed, and
-also download the imageNet url txt file, which is too large for pushing up to
-git.
+For image processing, please make sure you have PIL, requests installed. There
+is no need to download file for imageNet.
 
 ===========================================================
 -Interesting result from running LSH on imageNet:
