@@ -37,9 +37,32 @@ def brute_force_disjoint(m1, m2, k=1):
 	else:
 		return get_top_k(resultant_matrix, k, False)
 
+def brute_force_pair(m,k=1):
+	rows=m.shape[0]
+	columns=m.shape[1]
+	print rows, columns
+	largest=None
+	largest_tup=None
+	if k==1:
+		for i in range(0,columns):
+			
+			for j in range(i+1,columns):
+				dot=0
+				for k in range(0,rows):
+					dot+=m[k,i]*m[k,j]
+				tup=(i,j)
+				if largest < dot:
+					largest=dot
+					largest_tup=tup
+		return [(largest,largest_tup)]
+					
+				
+			
+		
 ########################################### Valiant
 
 def vector_aggregation(m, alpha, k=1):
+	totaltime=0
 	n = m.shape[1]    # number of points
 	d = m.shape[0]	  # dimensions
 
@@ -48,43 +71,52 @@ def vector_aggregation(m, alpha, k=1):
 		print "Invalid value of k"
 		return None
 
-	iterations = 10 * int(math.log(n, 2))     # 10logn
+	#iterations = 10 * int(math.log(n, 10))     # 10logn
 	no_of_subsets = int(math.floor(pow(n, (1-alpha))))
-
+	iterations = 10
 	# heap to store highest k elements
 	h = []
 
 	for i in range(0, iterations):
+		#print i
 		# randomly partition points into subsets
 		mapping = randomly_partition_into_subsets(n, no_of_subsets)
 
 		W = []    # list of W matrix
+		
 		for j in range(0, iterations):
 			# generate q to flip vectors randomly
 			q = generate_random_vector(n)
 
 			# create Z matrices
-			Z = np.empty(shape = (d, no_of_subsets)) 
+			
+			Z = np.empty(shape = (d, no_of_subsets),dtype='int16') 
+			#Z.astype(int32)
 			for key in mapping:
 				indices = mapping[key]
 				Z[:, key] = np.sum((m[:, indices] * q[indices]), axis = 1)
 
 			# TODO: replace with Strassens
+			#print 'hello'
 			W.append(np.dot(Z.T, Z))
-
+			np.int16(W)
 		# create the W matrix from the W list of matrices (75% percentile)
 		W_percentile = np.empty(shape = (no_of_subsets, no_of_subsets))
+		#print 'what up'
 		for x in range(0, no_of_subsets):
 			for y in range(0, no_of_subsets):
 				l = [W[ctr][x, y] for ctr in range(0, len(W))]
 				W_percentile[x, y] = np.percentile(np.array(l), 75, interpolation='lower')
-
+		
 		# search for top k elements in W_percentile matrix
+		#print 'yo'
 		if k == 1:
 			top_k = get_largest_element(W_percentile, True)
 		else:
 			top_k = get_top_k(W_percentile, k, True)
-
+	
+		#print 'almost done'
+	#	start=time.time()
 		for elem in top_k:
 			# get the corresponding buckets
 			(b1, b2) = elem[1]
@@ -104,7 +136,9 @@ def vector_aggregation(m, alpha, k=1):
 					hq.heappush(h, (val, (idx1, idx2)))
 				elif h[0][0] < p[0]:
 					hq.heappushpop(h, (val, (idx1, idx2)))
-
+	#	end=time.time()
+	#	totaltime+=end-start
+	#print 'totaltime:' ,totaltime
 	return [hq.heappop(h) for i in range(0, len(h))]
 
 
