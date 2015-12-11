@@ -1,0 +1,11 @@
+Dimensions (d): 1000 Points (n): 10000
+Epsilon: (vectors are epsilon far or (1-eps) rho close) 0
+Brute force result: [(1000, (3069, 2940))]
+Time= 597.758551121
+==============================
+Vector aggregation:
+result 0 : [(116, (9435, 3060))]
+Time= 100.471233845
+==============================
+LSH:
+L	k		touch		time
