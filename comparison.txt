@@ -8,9 +8,7 @@ Time= 3.03840112686
 LSH:
 L	k		touch		time
 2	2		14.79%		1.1137 s
-4	2		58.24%		4.1459 s
 L2k2 LSH result 0: 10
-L4k2 LSH result 0: 10
 ==============================
 Vector aggregation:
 result 1 : [(10, (538, 168))]
@@ -18,9 +16,7 @@ Time= 2.80571198463
 LSH:
 L	k		touch		time
 2	2		28.17%		1.8910 s
-4	2		45.25%		3.3630 s
 L2k2 LSH result 1: 10
-L4k2 LSH result 1: 10
 ==============================
 Vector aggregation:
 result 2 : [(10, (609, 123))]
@@ -28,9 +24,7 @@ Time= 2.80989384651
 LSH:
 L	k		touch		time
 2	2		56.24%		3.6008 s
-4	2		72.43%		4.9980 s
 L2k2 LSH result 2: 10
-L4k2 LSH result 2: 10
 ==============================
 Vector aggregation:
 result 3 : [(10, (364, 170))]
@@ -38,9 +32,7 @@ Time= 2.78899097443
 LSH:
 L	k		touch		time
 2	2		14.79%		1.0910 s
-4	2		34.97%		2.7281 s
 L2k2 LSH result 3: 10
-L4k2 LSH result 3: 10
 ==============================
 Vector aggregation:
 result 4 : [(10, (764, 872))]
@@ -48,9 +40,7 @@ Time= 2.79890394211
 LSH:
 L	k		touch		time
 2	2		34.37%		2.3104 s
-4	2		37.86%		2.8796 s
 L2k2 LSH result 4: 10
-L4k2 LSH result 4: 10
 ==============================
 Vector aggregation:
 result 5 : [(8, (545, 447))]
@@ -58,9 +48,7 @@ Time= 2.79968714714
 LSH:
 L	k		touch		time
 2	2		15.68%		1.1526 s
-4	2		32.77%		2.6023 s
 L2k2 LSH result 5: 10
-L4k2 LSH result 5: 10
 ==============================
 Vector aggregation:
 result 6 : [(8, (290, 130))]
@@ -68,9 +56,7 @@ Time= 2.7876739502
 LSH:
 L	k		touch		time
 2	2		62.44%		3.9971 s
-4	2		68.73%		4.7942 s
 L2k2 LSH result 6: 10
-L4k2 LSH result 6: 10
 ==============================
 Vector aggregation:
 result 7 : [(10, (563, 317))]
@@ -78,19 +64,15 @@ Time= 2.79577708244
 LSH:
 L	k		touch		time
 2	2		21.88%		1.5326 s
-4	2		55.14%		3.9467 s
 L2k2 LSH result 7: 10
-L4k2 LSH result 7: 10
 ==============================
 Vector aggregation:
 result 8 : [(8, (686, 342))]
 Time= 2.81415295601
 LSH:
 L	k		touch		time
-2	2		21.78%		1.5212 s
-4	2		35.06%		2.7287 s
+2	2		21.78%		1.5212
 L2k2 LSH result 8: 10
-L4k2 LSH result 8: 10
 ==============================
 Vector aggregation:
 result 9 : [(10, (33, 443))]
@@ -98,13 +80,10 @@ Time= 2.82143902779
 LSH:
 L	k		touch		time
 2	2		23.38%		1.6188 s
-4	2		42.56%		3.1824 s
 L2k2 LSH result 9: 10
-L4k2 LSH result 9: 10
 ==============================
 Vector aggregation accuracy: 60 %
 L2k2 LSH accuracy: 100%
-L4k2 LSH accuracy: 100%
 
 
 
@@ -118,9 +97,7 @@ Time= 25.0496890545
 LSH:
 L	k		touch		time
 2	2		14.10%		22.6727 s
-4	2		62.31%		100.0092 s
 L2k2 LSH result 0: 10
-L4k2 LSH result 0: 10
 ==============================
 Vector aggregation:
 result 1 : [(10, (3443, 1862))]
@@ -128,9 +105,7 @@ Time= 23.7707111835
 LSH:
 L	k		touch		time
 2	2		14.88%		23.8346 s
-4	2		24.24%		40.3996 s
 L2k2 LSH result 1: 10
-L4k2 LSH result 1: 10
 ==============================
 Vector aggregation:
 result 2 : [(10, (2947, 3906))]
@@ -138,9 +113,7 @@ Time= 23.8183250427
 LSH:
 L	k		touch		time
 2	2		29.69%		46.8263 s
-4	2		68.77%		111.2378 s
 L2k2 LSH result 2: 10
-L4k2 LSH result 2: 10
 ==============================
 Vector aggregation:
 result 3 : [(10, (1993, 3780))]
@@ -148,9 +121,7 @@ Time= 23.696532011
 LSH:
 L	k		touch		time
 2	2		7.44%		12.3932 s
-4	2		13.10%		23.5530 s
 L2k2 LSH result 3: 10
-L4k2 LSH result 3: 10
 ==============================
 Vector aggregation:
 result 4 : [(10, (1123, 4758))]
@@ -158,9 +129,7 @@ Time= 24.6570620537
 LSH:
 L	k		touch		time
 2	2		29.69%		48.8018 s
-4	2		70.31%		114.5969 s
 L2k2 LSH result 4: 10
-L4k2 LSH result 4: 10
 ==============================
 Vector aggregation:
 result 5 : [(10, (1660, 655))]
@@ -168,9 +137,7 @@ Time= 23.9162299633
 LSH:
 L	k		touch		time
 2	2		25.03%		39.5757 s
-4	2		45.31%		73.8950 s
 L2k2 LSH result 5: 10
-L4k2 LSH result 5: 10
 ==============================
 Vector aggregation:
 result 6 : [(10, (1659, 2669))]
@@ -178,9 +145,7 @@ Time= 23.9108860493
 LSH:
 L	k		touch		time
 2	2		6.28%		10.7809 s
-4	2		22.68%		38.3083 s
 L2k2 LSH result 6: 10
-L4k2 LSH result 6: 10
 ==============================
 Vector aggregation:
 result 7 : [(10, (3021, 542))]
@@ -188,9 +153,7 @@ Time= 23.8131988049
 LSH:
 L	k		touch		time
 2	2		17.20%		27.5088 s
-4	2		44.53%		72.6331 s
 L2k2 LSH result 7: 10
-L4k2 LSH result 7: 10
 ==============================
 Vector aggregation:
 result 8 : [(10, (1079, 280))]
@@ -198,9 +161,7 @@ Time= 23.8032028675
 LSH:
 L	k		touch		time
 2	2		12.50%		20.4620 s
-4	2		34.95%		57.4296 s
 L2k2 LSH result 8: 10
-L4k2 LSH result 8: 10
 ==============================
 Vector aggregation:
 result 9 : [(10, (1189, 1857))]
@@ -208,10 +169,138 @@ Time= 23.7544519901
 LSH:
 L	k		touch		time
 2	2		62.49%		101.1776 s
-4	2		81.22%		132.5339 s
 L2k2 LSH result 9: 10
-L4k2 LSH result 9: 10
 ==============================
 Vector aggregation accuracy: 100 %
 L2k2 LSH accuracy: 100%
-L4k2 LSH accuracy: 100%
+
+
+Dimensions (d): 10 Points (n): 10000
+Brute force result: [(10, (0, 638))]
+Time= 234.665586948
+==============================
+Vector aggregation:
+result 0 : [(10, (4018, 4987))]
+Time= 65.214220047
+LSH:
+L	k		touch		time
+2	2		25.00%		165.9872 s
+L2k2 LSH result 0: 10
+==============================
+Vector aggregation:
+result 1 : [(10, (6485, 9085))]
+Time= 65.3560180664
+LSH:
+L	k		touch		time
+2	2		14.06%		93.2716 s
+L2k2 LSH result 1: 10
+==============================
+Vector aggregation:
+result 2 : [(10, (5021, 7645))]
+Time= 64.3558080196
+LSH:
+L	k		touch		time
+2	2		34.37%		224.4728 s
+L2k2 LSH result 2: 10
+==============================
+Vector aggregation:
+result 3 : [(10, (2477, 28))]
+Time= 64.4441730976
+LSH:
+L	k		touch		time
+2	2		23.45%		151.8518 s
+L2k2 LSH result 3: 10
+==============================
+Vector aggregation:
+result 4 : [(10, (4057, 2624))]
+Time= 66.9676802158
+LSH:
+L	k		touch		time
+2	2		31.26%		209.4004 s
+L2k2 LSH result 4: 10
+==============================
+Vector aggregation:
+result 5 : [(10, (4569, 9834))]
+Time= 68.5964441299
+LSH:
+L	k		touch		time
+2	2		13.68%		89.9310 s
+L2k2 LSH result 5: 10
+==============================
+Vector aggregation:
+result 6 : [(10, (652, 9060))]
+Time= 62.4812529087
+LSH:
+L	k		touch		time
+2	2		18.75%		116.1074 s
+L2k2 LSH result 6: 10
+==============================
+Vector aggregation:
+result 7 : [(10, (2970, 1176))]
+Time= 62.4201281071
+LSH:
+L	k		touch		time
+2	2		28.14%		182.0706 s
+L2k2 LSH result 7: 10
+==============================
+Vector aggregation:
+result 8 : [(10, (1994, 2893))]
+Time= 62.8016011715
+LSH:
+L	k		touch		time
+2	2		62.50%		401.1627 s
+L2k2 LSH result 8: 10
+==============================
+Vector aggregation:
+result 9 : [(10, (1367, 3279))]
+Time= 63.1426889896
+LSH:
+L	k		touch		time
+2	2		26.58%		176.8327 s
+L2k2 LSH result 9: 10
+==============================
+Vector aggregation accuracy: 100 %
+L2k2 LSH accuracy: 100%
+
+
+
+
+Dimensions (d): 100 Points (n): 10000
+Brute force result: [(54, (3417, 739))]
+Time= 2193.38094902
+==============================
+Vector aggregation:
+result 0 : [(40, (619, 2601))]
+Time= 68.609140873
+LSH:
+L	k		touch		time
+2	2		17.97%		909.2975 s
+
+
+
+
+
+
+
+
+
+dataset_indices = [8]
+
+Brute Force
+====================================
+http://farm1.static.flickr.com/168/379737307_47cde42a2c.jpg
+http://farm3.static.flickr.com/2359/2172102117_4e081a40d9.jpg
+
+LSH test
+====================================
+L	k		touch		time
+2	2		92.86%		0.1497 s
+L2k2 LSH result:
+http://bp0.blogger.com/_6B8tPuW7TwQ/Rr7ZHVM71jI/AAAAAAAACRs/HieacjXIUXw/s400/quagga.jpg
+http://farm1.static.flickr.com/168/379737307_47cde42a2c.jpg
+
+vector aggregation test
+====================================
+similarity: 402
+http://farm1.static.flickr.com/168/379737307_47cde42a2c.jpg
+http://bp0.blogger.com/_6B8tPuW7TwQ/Rr7ZHVM71jI/AAAAAAAACRs/HieacjXIUXw/s400/quagga.jpg
