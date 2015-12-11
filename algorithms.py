@@ -40,12 +40,10 @@ def brute_force_disjoint(m1, m2, k=1):
 def brute_force_pair(m,k=1):
 	rows=m.shape[0]
 	columns=m.shape[1]
-	print rows, columns
 	largest=None
 	largest_tup=None
 	if k==1:
-		for i in range(0,columns):
-			
+		for i in range(0,columns):	
 			for j in range(i+1,columns):
 				dot=0
 				for k in range(0,rows):
@@ -71,14 +69,12 @@ def vector_aggregation(m, alpha, k=1):
 		print "Invalid value of k"
 		return None
 
-	#iterations = 10 * int(math.log(n, 10))     # 10logn
 	no_of_subsets = int(math.floor(pow(n, (1-alpha))))
 	iterations = 10
 	# heap to store highest k elements
 	h = []
 
 	for i in range(0, iterations):
-		#print i
 		# randomly partition points into subsets
 		mapping = randomly_partition_into_subsets(n, no_of_subsets)
 
@@ -97,26 +93,21 @@ def vector_aggregation(m, alpha, k=1):
 				Z[:, key] = np.sum((m[:, indices] * q[indices]), axis = 1)
 
 			# TODO: replace with Strassens
-			#print 'hello'
 			W.append(np.dot(Z.T, Z))
 			np.int16(W)
 		# create the W matrix from the W list of matrices (75% percentile)
 		W_percentile = np.empty(shape = (no_of_subsets, no_of_subsets))
-		#print 'what up'
 		for x in range(0, no_of_subsets):
 			for y in range(0, no_of_subsets):
 				l = [W[ctr][x, y] for ctr in range(0, len(W))]
 				W_percentile[x, y] = np.percentile(np.array(l), 75, interpolation='lower')
 		
 		# search for top k elements in W_percentile matrix
-		#print 'yo'
 		if k == 1:
 			top_k = get_largest_element(W_percentile, True)
 		else:
 			top_k = get_top_k(W_percentile, k, True)
 	
-		#print 'almost done'
-	#	start=time.time()
 		for elem in top_k:
 			# get the corresponding buckets
 			(b1, b2) = elem[1]
@@ -136,9 +127,6 @@ def vector_aggregation(m, alpha, k=1):
 					hq.heappush(h, (val, (idx1, idx2)))
 				elif h[0][0] < p[0]:
 					hq.heappushpop(h, (val, (idx1, idx2)))
-	#	end=time.time()
-	#	totaltime+=end-start
-	#print 'totaltime:' ,totaltime
 	return [hq.heappop(h) for i in range(0, len(h))]
 
 
@@ -245,47 +233,34 @@ class LSHtester:
 		L_set: different L to try
 
 		"""
-		close_points_ans = []
 		lsh_ans_set = []
-		for q in self.queries:
-			res = []
-			for i_x,dist in self.lsh_brute_force_search(q, metric,
-					self.neighbor_num+1):
-				res.append(i_x)
-			close_points_ans.append(res)
 
-		print("L\tk\t\tacc\t\t\ttouch\t\ttime")
+		print("L\tk\t\ttouch\t\ttime")
 
 		for k in k_set:
-			start_timer = time.time()
 			lsh = LSHmain(hash_family, k, 0)
 			for L in L_set:
+				kL_set = []
+				start_time = time.time()
 				lsh.fill_hash_tables(L)
 				lsh.index(self.points)
-				end_timer = time.time()
 
 				right_points = 0
 				
-				for q,ans in zip(self.queries, close_points_ans):
+				for q_i in xrange(len(self.queries)):
+					q = self.queries[q_i]
 					lsh_ans = []
-					for i_x,dist in lsh.query(q, metric,
-							self.neighbor_num+1):
-						lsh_ans.append(i_x)
-					lsh_ans_set.append(lsh_ans)
-					if lsh_ans == ans:
-						right_points += 1
-				print "{0}\t{1}\t\t{2}%\t\t\t{3:.2f}%\t\t{4:.4f} s".format(L, k,
-						right_points*100/len(self.queries),
+					response = lsh.query(q, metric, self.neighbor_num+1)
+					for i in xrange(1,len(response)):
+						i_x,dist = response[i]
+						lsh_ans.append((np.dot(self.queries[q_i], self.points[i_x]),(i_x,q_i)))
+					kL_set.append(lsh_ans)
+				end_time = time.time()
+				lsh_ans_set.append(kL_set)
+				print "{0}\t{1}\t\t{2:.2f}%\t\t{3:.4f} s".format(L, k,
 						float(lsh.get_average_touched())*100/len(self.points),
-						end_timer-start_timer)
-		return close_points_ans, lsh_ans_set
-	
-	def lsh_brute_force_search(self, q, metric, res_limit):
-		""" brute force search for close points """
-		close_points = []
-		for i_x,p in enumerate(self.points):
-			close_points.append((i_x, metric(p, q)))
-		return sorted(close_points, key=itemgetter(1))[:res_limit]
+						end_time - start_time)
+		return lsh_ans_set
 
 class L1HashFamily:
 	def __init__(self, w, d):
