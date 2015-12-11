@@ -7,9 +7,9 @@ from utility import *
 if __name__ == "__main__":
 	randomly_seed_numpy()
 	k_set = [2]
-	L_set = [2,4]
+	L_set = [2]
 	for i in [10, 50, 100, 500, 1000]: #d
-		for j in [1000, 5000, 10000, 50000, 100000]: #n
+		for j in [10000, 50000, 100000]: #n
 			if i*50<=j:			
 				a=generate_random_matrix(i,j)
 				m, v = generate_epsilon_close_pair(a, 2);

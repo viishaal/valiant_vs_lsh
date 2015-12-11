@@ -1,4 +1,7 @@
 import requests
+import requests_cache
+
+requests_cache.install_cache()
 
 AVAILABLE_SYNSET_URL = "http://www.image-net.org/api/text/imagenet.synset.obtain_synset_list"
 SYNSET_NAME_PREFIX = "http://www.image-net.org/api/text/wordnet.synset.getwords?wnid="
