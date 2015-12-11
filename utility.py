@@ -139,11 +139,14 @@ def randomly_partition_into_subsets(n, b):
 
 ######################### matrix/array analysis
 
-def matrix_to_histogram(m, bins=50, normed=1):
+def matrix_to_histogram(m, name="temp", bins=50, normed=1):
 	""" plots a histogram to get general idea of distribution of off-diagonal elements
 	"""
 	arr = flatten_matrix(m)
-	plt.hist(m, bins=bins, normed=normed)
+	plt.hist(arr, bins=bins, normed=normed)
+	plt.xlabel("Value")
+	plt.ylabel("Frequency")
+	plt.savefig(name)
 	plt.show()
 
 

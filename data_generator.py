@@ -10,10 +10,9 @@ def generate_random_matrix(rows, cols):
 		given rows and cols of the resultant matrix
 	"""
 	s = rows * cols
-	m =np.empty(shape=(1,s),dtype=np.int16)
+	m =np.empty(shape=(1,s), dtype=np.int16)
 	m = np.random.randint(2, size = s).reshape(rows, cols)
 	m[m==0] = -1
-	#np.int16(m)
 	
 	return m
 

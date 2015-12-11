@@ -1,6 +1,5 @@
 # the suite of algorithms
 
-# TODO: insert timers
 
 import numpy as np
 from utility import *
@@ -12,7 +11,7 @@ from operator import itemgetter
 import time
 
 ########################################### Brutus
-# TODO IMPORTANT: replace with Strassens multiplication
+
 def brute_force(m, k=1):
 	""" takes a matrix and calculates pairwise dot product of all columns
 		returns k closest off-diagonal pairs indices and the value of dot products
@@ -24,13 +23,13 @@ def brute_force(m, k=1):
 	else:
 		return get_top_k(resultant_matrix, k, True)
 
-# TODO IMPORTANT: replace with Strassens multiplication
+
 def brute_force_disjoint(m1, m2, k=1):
 	""" takes two matrices and calculates pairwise dot product of all columns
 		returns k closest pairs indices and the value of dot products
 		Ex return: [(v1, (i1,j1)), (v2, (i2,j2))] v1,v2 are values while (i1,j1), (i2,j2) are indices
 	"""
-	# TODO: replace with Strassens multiplication
+
 	resultant_matrix = np.dot(m1.T, m2)
 	if k == 1:
 		return get_largest_element(resultant_matrix, False)
@@ -70,7 +69,9 @@ def vector_aggregation(m, alpha, k=1):
 		return None
 
 	no_of_subsets = int(math.floor(pow(n, (1-alpha))))
-	iterations = 10
+	# hardcoded iterations for now for the data set size that we are tesing on
+	iterations = 25
+
 	# heap to store highest k elements
 	h = []
 
@@ -86,7 +87,7 @@ def vector_aggregation(m, alpha, k=1):
 
 			# create Z matrices
 			
-			Z = np.empty(shape = (d, no_of_subsets),dtype='int16') 
+			Z = np.empty(shape = (d, no_of_subsets), dtype='int16') 
 			#Z.astype(int32)
 			for key in mapping:
 				indices = mapping[key]
@@ -94,7 +95,7 @@ def vector_aggregation(m, alpha, k=1):
 
 			# TODO: replace with Strassens
 			W.append(np.dot(Z.T, Z))
-			np.int16(W)
+
 		# create the W matrix from the W list of matrices (75% percentile)
 		W_percentile = np.empty(shape = (no_of_subsets, no_of_subsets))
 		for x in range(0, no_of_subsets):

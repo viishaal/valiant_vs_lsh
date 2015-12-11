@@ -1,0 +1,33 @@
+Dimensions (d): 1000 Points (n): 10000
+Epsilon: (vectors are epsilon far or (1-eps) rho close) 0
+Brute force result: [(1000, (2936, 1462))]
+Time= 612.599426031
+==============================
+Vector aggregation:
+result 0 : [(1000, (2936, 1462))]
+Time= 339.029237032
+==============================
+Vector aggregation accuracy: 10 %
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+Dimensions (d): 1000 Points (n): 10000
+Epsilon: (vectors are epsilon far or (1-eps) rho close) 0.5
+Brute force result: [(532, (6930, 5944))]
+Time= 639.015361071
+==============================
+Vector aggregation:
+result 0 : [(148, (7194, 6276))]
+Time= 333.410684109
+==============================
+Vector aggregation accuracy: 0 %
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+Dimensions (d): 1000 Points (n): 10000
+Epsilon: (vectors are epsilon far or (1-eps) rho close) 1
+Brute force result: [(168, (5447, 3353))]
+Time= 657.606307983
+==============================
+Vector aggregation:
+result 0 : [(116, (3758, 7379))]
+Time= 347.890660048
+==============================
+Vector aggregation accuracy: 0 %
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

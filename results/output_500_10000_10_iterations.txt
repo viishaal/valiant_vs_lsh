@@ -1,0 +1,20 @@
+Dimensions (d): 500 Points (n): 10000
+Epsilon: (vectors are epsilon far or (1-eps) rho close) 0
+Brute force result: [(500, (568, 357))]
+Time= 212.345010042
+==============================
+Vector aggregation:
+result 0 : [(76, (5884, 7000))]
+Time= 76.750633955
+==============================
+LSH:
+L	k		touch		time
+2	2		27.35%		7269.2208 s
+L2k2 LSH result 0: 500
+==============================
+Vector aggregation:
+result 1 : [(94, (7818, 8387))]
+Time= 76.8729300499
+==============================
+LSH:
+L	k		touch		time
