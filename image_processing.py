@@ -93,7 +93,7 @@ def read_imageNet(wnids, pic_res):
 			response = requests.get(url)
 		except ConnectionError as e:
 			response = None
-		if response != None and response.headers['Content-Type']=='image/jpeg' and response.status_code == 200:
+		if response != None and response.headers!= None and 'Content-Type' in response.headers and response.headers['Content-Type']=='image/jpeg' and response.status_code == 200:
 			count += 1
 			valid_urls.append(url)
 			image = Image.open(StringIO(response.content))

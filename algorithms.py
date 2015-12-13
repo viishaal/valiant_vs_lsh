@@ -70,7 +70,7 @@ def vector_aggregation(m, alpha, k=1):
 
 	no_of_subsets = int(math.floor(pow(n, (1-alpha))))
 	# hardcoded iterations for now for the data set size that we are tesing on
-	iterations = 25
+	iterations = 10
 
 	# heap to store highest k elements
 	h = []
@@ -241,13 +241,12 @@ class LSHtester:
 		for k in k_set:
 			lsh = LSHmain(hash_family, k, 0)
 			for L in L_set:
+				#preprocessing
 				kL_set = []
 				start_time = time.time()
 				lsh.fill_hash_tables(L)
 				lsh.index(self.points)
-
-				right_points = 0
-				
+				#querying
 				for q_i in xrange(len(self.queries)):
 					q = self.queries[q_i]
 					lsh_ans = []
@@ -293,10 +292,8 @@ class L1Hash:
 		return str(hash_res)
 
 def L1_norm(u, v):
-	dist = []
-	for i in xrange(len(u)):
-		dist.append(abs(u[i]-v[i]))
-	return sum(dist)
+	dist = np.subtract(u,v)
+	return np.sum(np.absolute(dist))
 
 # TODO: optimization multithreaded implementation and caches
 
