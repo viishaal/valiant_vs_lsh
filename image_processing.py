@@ -1,5 +1,7 @@
 import requests
 from requests.exceptions import ConnectionError
+from requests.exceptions import Timeout
+from requests.exceptions import TooManyRedirects
 import requests_cache
 from PIL import Image
 import numpy as np
@@ -87,11 +89,18 @@ def read_imageNet(wnids, pic_res):
 	matrix = []
 	urls = imagenet.url_list
 	count = 0
+	c = 0
 	print "fetching %d images from ImageNet..." % len(urls)
 	for url in urls:
+		c+=1
+		print c
 		try:
-			response = requests.get(url)
+			response = requests.get(url,timeout=5)
 		except ConnectionError as e:
+			response = None
+		except Timeout as t:
+			response = None
+		except TooManyRedirects as r:
 			response = None
 		if response != None and response.headers!= None and 'Content-Type' in response.headers and response.headers['Content-Type']=='image/jpeg' and response.status_code == 200:
 			count += 1
